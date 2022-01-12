@@ -24,7 +24,7 @@ func GetFilesList(c *gin.Context) {
 		d := file.Sys().(*syscall.Win32FileAttributeData)
 		fileDetails := &entities.FileDetails{
 			Name:         file.Name(),
-			Ext:          strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())),
+			Ext:          file.Name()[strings.LastIndex(file.Name(), "."):],
 			CreationDate: time.Unix(0, d.CreationTime.Nanoseconds()),
 			Size:         uint64(file.Size()),
 		}
