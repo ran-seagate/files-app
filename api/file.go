@@ -21,11 +21,11 @@ func GetFilesList(c *gin.Context) {
 
 	var filesDetails []*entities.FileDetails
 	for _, file := range files {
-		d := file.Sys().(*syscall.Win32FileAttributeData)
+		d := file.Sys().(*syscall.Stat_t)
 		fileDetails := &entities.FileDetails{
 			Name:         file.Name(),
 			Ext:          file.Name()[strings.LastIndex(file.Name(), "."):],
-			CreationDate: time.Unix(0, d.CreationTime.Nanoseconds()),
+			CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
 			Size:         uint64(file.Size()),
 		}
 		filesDetails = append(filesDetails, fileDetails)
