@@ -35,6 +35,7 @@ func init() {
 
 func main() {
 	router := gin.Default()
+	router.Use(api.CORSMiddleware())
 	files := router.Group("/files")
 	{
 		files.GET("/", api.GetFilesList)
