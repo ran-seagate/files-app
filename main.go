@@ -40,6 +40,7 @@ func main() {
 	{
 		files.GET("/", api.GetFilesList)
 		files.GET("/:file_name", api.GetFile)
+		files.PUT("/", api.UploadFile)
 		files.DELETE("/:file_name", api.DeleteFile)
 	}
 

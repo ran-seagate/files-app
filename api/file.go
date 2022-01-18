@@ -58,8 +58,23 @@ func DeleteFile(c *gin.Context) {
 
 	err := os.Remove(filePath)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to remove file", "file_name": fileName})
+		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to remove file: " + err.Error(), "file_name": fileName})
 		return
 	}
 	c.JSON(http.StatusOK, nil)
+}
+
+func UploadFile(c *gin.Context) {
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to get file from request: " + err.Error()})
+		return
+	}
+
+	err = c.SaveUploadedFile(file, filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to save file from request: " + err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "File " + file.Filename + " Uploaded successfully"})
 }
