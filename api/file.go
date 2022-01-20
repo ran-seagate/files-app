@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
@@ -16,7 +17,9 @@ import (
 func GetFilesList(c *gin.Context) {
 	files, err := ioutil.ReadDir(config.AppConfig.UploadFolder)
 	if err != nil {
+		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	var filesDetails []*entities.FileDetails
@@ -41,6 +44,7 @@ func GetFile(c *gin.Context) {
 	filePath := filepath.Join(".", config.AppConfig.UploadFolder, fileName)
 
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "File doesn't exist", "file_name": fileName})
 		return
 	}
@@ -54,12 +58,14 @@ func DeleteFile(c *gin.Context) {
 	filePath := filepath.Join(".", config.AppConfig.UploadFolder, fileName)
 
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "File doesn't exist", "file_name": fileName})
 		return
 	}
 
 	err := os.Remove(filePath)
 	if err != nil {
+		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to remove file: " + err.Error(), "file_name": fileName})
 		return
 	}
@@ -69,12 +75,15 @@ func DeleteFile(c *gin.Context) {
 func UploadFile(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
+		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to get file from request: " + err.Error()})
 		return
 	}
 
 	err = c.SaveUploadedFile(file, filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
 	if err != nil {
+		fmt.Printf("[UploadFile]: %s\n", err)
+		fmt.Printf("[UploadFile]: %s\n", filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to save file from request: " + err.Error()})
 		return
 	}
