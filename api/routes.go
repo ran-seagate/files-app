@@ -9,7 +9,7 @@ func InitRouter() *gin.Engine {
 	{
 		files.GET("/", GetFilesList)
 		files.GET("/:file_name", GetFile)
-		files.PUT("/", UploadFile)
+		files.POST("/", UploadFile)
 		files.DELETE("/:file_name", DeleteFile)
 	}
 

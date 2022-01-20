@@ -52,7 +52,7 @@ func TestGetFileExists(t *testing.T) {
 	}()
 
 	w.Body.Reset()
-	request := httptest.NewRequest("PUT", "/files/", pr)
+	request := httptest.NewRequest("POST", "/files/", pr)
 	request.Header.Add("Content-Type", writer.FormDataContentType())
 	router.ServeHTTP(w, request)
 	assert.Equal(t, 200, w.Code)
@@ -96,7 +96,7 @@ func TestDeleteFileExists(t *testing.T) {
 		}
 	}()
 
-	request := httptest.NewRequest("PUT", "/files/", pr)
+	request := httptest.NewRequest("POST", "/files/", pr)
 	request.Header.Add("Content-Type", writer.FormDataContentType())
 	router.ServeHTTP(w, request)
 	assert.Equal(t, 200, w.Code)
