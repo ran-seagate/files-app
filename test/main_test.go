@@ -1,14 +1,13 @@
-package main
+package test
 
 import (
-	"newEmpTask/api"
 	"newEmpTask/config"
 	"os"
 	"path/filepath"
 )
 
 func init() {
-	err := config.ReadConf("config/local.json")
+	err := config.ReadConf("../config/tests.json")
 	if err != nil {
 		panic(err)
 	}
@@ -17,13 +16,11 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-
 }
 
-func main() {
-	router := api.InitRouter()
-	err := router.Run("localhost:8080")
+func deleteTestUploadFolder() {
+	err := os.RemoveAll(config.AppConfig.UploadFolder)
 	if err != nil {
-		panic("Failed to run http server")
+		panic(err)
 	}
 }

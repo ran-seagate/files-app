@@ -25,8 +25,10 @@ func GetFilesList(c *gin.Context) {
 		fileDetails := &entities.FileDetails{
 			Name:         file.Name(),
 			Ext:          file.Name()[strings.LastIndex(file.Name(), "."):],
-			CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
-			Size:         uint64(file.Size()),
+			CreationDate: time.Unix(d.Ctimespec.Sec, d.Ctimespec.Nsec),
+			// For linux:
+			// CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
+			Size: uint64(file.Size()),
 		}
 		filesDetails = append(filesDetails, fileDetails)
 	}
@@ -67,13 +69,13 @@ func DeleteFile(c *gin.Context) {
 func UploadFile(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to get file from request: " + err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to get file from request: " + err.Error()})
 		return
 	}
 
 	err = c.SaveUploadedFile(file, filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to save file from request: " + err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to save file from request: " + err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "File " + file.Filename + " Uploaded successfully"})
