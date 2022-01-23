@@ -14,7 +14,9 @@ func init() {
 		panic(err)
 	}
 
-	fmt.Printf("******\n%+v\n*****\n\n", files)
+	for _, file := range files {
+		fmt.Println(file.Name())
+	}
 	err = config.ReadConf("config/local.json")
 	if err != nil {
 		panic(err)
