@@ -1,12 +1,12 @@
 package api
 
 import (
+	"files-app/config"
+	"files-app/entities"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
-	"newEmpTask/config"
-	"newEmpTask/entities"
 	"os"
 	"path/filepath"
 	"strings"

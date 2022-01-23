@@ -1,4 +1,4 @@
-module newEmpTask
+module files-app
 
 go 1.17
 

@@ -1,9 +1,9 @@
 package main
 
 import (
+	"files-app/api"
+	"files-app/config"
 	"fmt"
-	"newEmpTask/api"
-	"newEmpTask/config"
 	"path/filepath"
 )
 

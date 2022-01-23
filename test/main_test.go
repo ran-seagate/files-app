@@ -1,10 +1,10 @@
 package test
 
 import (
+	"files-app/api"
+	"files-app/config"
 	"github.com/gin-gonic/gin"
 	"net/http/httptest"
-	"newEmpTask/api"
-	"newEmpTask/config"
 	"os"
 	"path/filepath"
 )
