@@ -9,7 +9,7 @@ import (
 
 func init() {
 
-	files, err := ioutil.ReadDir(config.AppConfig.UploadFolder)
+	files, err := ioutil.ReadDir("/")
 	if err != nil {
 		panic(err)
 	}
