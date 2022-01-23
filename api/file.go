@@ -36,12 +36,13 @@ func GetFilesList(c *gin.Context) {
 	for _, file := range files {
 		d := file.Sys().(*syscall.Stat_t)
 		fileDetails := &entities.FileDetails{
-			Name:         file.Name(),
-			Ext:          file.Name()[strings.LastIndex(file.Name(), "."):],
-			CreationDate: time.Unix(d.Ctimespec.Sec, d.Ctimespec.Nsec),
+			Name: file.Name(),
+			Ext:  file.Name()[strings.LastIndex(file.Name(), "."):],
+			// For mac:
+			//CreationDate: time.Unix(d.Ctimespec.Sec, d.Ctimespec.Nsec),
 			// For linux:
-			// CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
-			Size: uint64(file.Size()),
+			CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
+			Size:         uint64(file.Size()),
 		}
 		filesDetails = append(filesDetails, fileDetails)
 	}
