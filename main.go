@@ -4,21 +4,10 @@ import (
 	"fmt"
 	"github.com/ran-seagate/files-app/api"
 	"github.com/ran-seagate/files-app/config"
-	"io/ioutil"
 )
 
 func init() {
-
-	files, err := ioutil.ReadDir("/files-app/config")
-	if err != nil {
-		panic(err)
-	}
-
-	for _, file := range files {
-		fmt.Println(file.Name())
-		fmt.Println(file.Mode())
-	}
-	err = config.ReadConf("config/local.json")
+	err := config.ReadConf("/config/local.json")
 	if err != nil {
 		panic(err)
 	}
