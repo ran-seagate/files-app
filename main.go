@@ -9,7 +9,7 @@ import (
 
 func init() {
 
-	files, err := ioutil.ReadDir("/")
+	files, err := ioutil.ReadDir("/files-app")
 	if err != nil {
 		panic(err)
 	}
