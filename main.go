@@ -4,10 +4,17 @@ import (
 	"fmt"
 	"github.com/ran-seagate/files-app/api"
 	"github.com/ran-seagate/files-app/config"
+	"os"
 )
 
 func init() {
-	err := config.ReadConf("config/local.json")
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(path)
+	err = config.ReadConf("config/local.json")
 	if err != nil {
 		panic(err)
 	}
