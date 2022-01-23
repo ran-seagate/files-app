@@ -14,10 +14,20 @@ import (
 	"time"
 )
 
+func CreateUploadFolder() error {
+	err := os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("[CreateUploadFolder]: successfully created upload folder")
+	return nil
+}
+
 func GetFilesList(c *gin.Context) {
 	files, err := ioutil.ReadDir(config.AppConfig.UploadFolder)
 	if err != nil {
-		fmt.Printf("[UploadFile]: %s\n", err)
+		fmt.Printf("[GetFilesList]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

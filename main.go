@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"newEmpTask/api"
 	"newEmpTask/config"
-	"os"
 	"path/filepath"
 )
 
@@ -15,12 +14,11 @@ func init() {
 	}
 
 	fmt.Printf("[init]: successfully read config file: %+v\n", *config.AppConfig)
-	err = os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm)
+
+	err = api.CreateUploadFolder()
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println("[init]: successfully created upload folder")
 }
 
 func main() {

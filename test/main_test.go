@@ -26,7 +26,7 @@ func deleteTestUploadFolder() {
 func setup() (*gin.Engine, *httptest.ResponseRecorder) {
 	router := api.InitRouter()
 	w := httptest.NewRecorder()
-	err := os.MkdirAll(filepath.Join(config.AppConfig.UploadFolder), os.ModePerm)
+	err := api.CreateUploadFolder()
 	if err != nil {
 		panic(err)
 	}
