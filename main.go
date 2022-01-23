@@ -1,9 +1,9 @@
 package main
 
 import (
-	"files-app/api"
-	"files-app/config"
 	"fmt"
+	"github.com/ran-seagate/files-app/api"
+	"github.com/ran-seagate/files-app/config"
 	"path/filepath"
 )
 

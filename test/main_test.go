@@ -1,9 +1,9 @@
 package test
 
 import (
-	"files-app/api"
-	"files-app/config"
 	"github.com/gin-gonic/gin"
+	"github.com/ran-seagate/files-app/api"
+	"github.com/ran-seagate/files-app/config"
 	"net/http/httptest"
 	"os"
 	"path/filepath"

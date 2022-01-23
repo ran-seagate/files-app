@@ -2,7 +2,7 @@ package test
 
 import (
 	"encoding/json"
-	"files-app/entities"
+	"github.com/ran-seagate/files-app/entities"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"mime/multipart"

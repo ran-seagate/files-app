@@ -1,4 +1,4 @@
-module files-app
+module github.com/ran-seagate/files-app
 
 go 1.17
 

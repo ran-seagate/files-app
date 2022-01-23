@@ -1,10 +1,10 @@
 package api
 
 import (
-	"files-app/config"
-	"files-app/entities"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/ran-seagate/files-app/config"
+	"github.com/ran-seagate/files-app/entities"
 	"io/ioutil"
 	"net/http"
 	"os"
