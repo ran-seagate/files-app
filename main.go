@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	err := config.ReadConf(filepath.Join("config", "local.json"))
+	err := config.ReadConf(filepath.Join(".", "config", "local.json"))
 	if err != nil {
 		panic(err)
 	}
