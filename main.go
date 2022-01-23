@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"github.com/ran-seagate/files-app/api"
 	"github.com/ran-seagate/files-app/config"
+	"path/filepath"
 )
 
 func init() {
-	err := config.ReadConf("/config/local.json")
+	err := config.ReadConf(filepath.Join(".", "config", "tests.json"))
 	if err != nil {
 		panic(err)
 	}
@@ -22,7 +23,7 @@ func init() {
 
 func main() {
 	router := api.InitRouter()
-	err := router.Run("localhost:8081")
+	err := router.Run(":8081")
 	if err != nil {
 		panic("Failed to run http server")
 	}
