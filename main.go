@@ -23,7 +23,7 @@ func init() {
 
 func main() {
 	router := api.InitRouter()
-	err := router.Run("localhost:8080")
+	err := router.Run("localhost:8081")
 	if err != nil {
 		panic("Failed to run http server")
 	}
