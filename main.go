@@ -9,13 +9,14 @@ import (
 
 func init() {
 
-	files, err := ioutil.ReadDir("/files-app")
+	files, err := ioutil.ReadDir("/files-app/config")
 	if err != nil {
 		panic(err)
 	}
 
 	for _, file := range files {
 		fmt.Println(file.Name())
+		fmt.Println(file.Mode())
 	}
 	err = config.ReadConf("config/local.json")
 	if err != nil {
