@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	err := config.ReadConf("../config/tests.json")
+	err := config.ReadConf(filepath.Join("..", "config", "tests.json"))
 	if err != nil {
 		panic(err)
 	}
@@ -26,7 +26,7 @@ func deleteTestUploadFolder() {
 func setup() (*gin.Engine, *httptest.ResponseRecorder) {
 	router := api.InitRouter()
 	w := httptest.NewRecorder()
-	err := os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm)
+	err := os.MkdirAll(filepath.Join(config.AppConfig.UploadFolder), os.ModePerm)
 	if err != nil {
 		panic(err)
 	}

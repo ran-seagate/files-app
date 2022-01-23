@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"newEmpTask/api"
 	"newEmpTask/config"
 	"os"
@@ -8,16 +9,18 @@ import (
 )
 
 func init() {
-	err := config.ReadConf("config/local.json")
+	err := config.ReadConf(filepath.Join("config", "local.json"))
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Printf("[init]: successfully read config file: %+v\n", *config.AppConfig)
 	err = os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm)
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("[init]: successfully created upload folder")
 }
 
 func main() {

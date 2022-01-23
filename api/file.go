@@ -50,7 +50,6 @@ func GetFile(c *gin.Context) {
 	}
 
 	c.FileAttachment(filePath, fileName)
-	c.JSON(http.StatusOK, nil)
 }
 
 func DeleteFile(c *gin.Context) {
@@ -83,7 +82,6 @@ func UploadFile(c *gin.Context) {
 	err = c.SaveUploadedFile(file, filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
 	if err != nil {
 		fmt.Printf("[UploadFile]: %s\n", err)
-		fmt.Printf("[UploadFile]: %s\n", filepath.Join(".", config.AppConfig.UploadFolder, file.Filename))
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to save file from request: " + err.Error()})
 		return
 	}
