@@ -11,6 +11,7 @@ type Config struct {
 	UploadFolder string `json:"upload_folder"`
 }
 
+// ReadConf reads conf from config dir
 func ReadConf(path string) error {
 	content, err := ioutil.ReadFile(path)
 	if err != nil {

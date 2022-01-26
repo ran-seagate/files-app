@@ -14,9 +14,9 @@ import (
 	"time"
 )
 
+// CreateUploadFolder creates upload folder on the root dir
 func CreateUploadFolder() error {
-	err := os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm)
-	if err != nil {
+	if err := os.MkdirAll(filepath.Join(".", config.AppConfig.UploadFolder), os.ModePerm); err != nil {
 		return err
 	}
 
@@ -24,6 +24,7 @@ func CreateUploadFolder() error {
 	return nil
 }
 
+// GetFilesList gets list of files on the upload dir
 func GetFilesList(c *gin.Context) {
 	files, err := ioutil.ReadDir(config.AppConfig.UploadFolder)
 	if err != nil {
@@ -39,10 +40,10 @@ func GetFilesList(c *gin.Context) {
 			Name: file.Name(),
 			Ext:  file.Name()[strings.LastIndex(file.Name(), "."):],
 			// For mac:
-			//CreationDate: time.Unix(d.Ctimespec.Sec, d.Ctimespec.Nsec),
+			CreationDate: time.Unix(d.Ctimespec.Sec, d.Ctimespec.Nsec),
 			// For linux:
-			CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
-			Size:         uint64(file.Size()),
+			//CreationDate: time.Unix(int64(d.Ctim.Sec), int64(d.Ctim.Nsec)),
+			Size: uint64(file.Size()),
 		}
 		filesDetails = append(filesDetails, fileDetails)
 	}
@@ -50,6 +51,7 @@ func GetFilesList(c *gin.Context) {
 	c.JSON(http.StatusOK, filesDetails)
 }
 
+// GetFile gets a file by its name as a path url
 func GetFile(c *gin.Context) {
 	fileName := c.Param("file_name")
 	filePath := filepath.Join(".", config.AppConfig.UploadFolder, fileName)
@@ -63,6 +65,7 @@ func GetFile(c *gin.Context) {
 	c.FileAttachment(filePath, fileName)
 }
 
+// DeleteFile deletes a file from the local upload dir
 func DeleteFile(c *gin.Context) {
 	fileName := c.Param("file_name")
 	filePath := filepath.Join(".", config.AppConfig.UploadFolder, fileName)
@@ -73,15 +76,16 @@ func DeleteFile(c *gin.Context) {
 		return
 	}
 
-	err := os.Remove(filePath)
-	if err != nil {
+	if err := os.Remove(filePath); err != nil {
 		fmt.Printf("[UploadFile]: %s\n", err)
 		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{"error": "Failed to remove file: " + err.Error(), "file_name": fileName})
 		return
 	}
+
 	c.JSON(http.StatusOK, nil)
 }
 
+// UploadFile uploads a file to the upload dir
 func UploadFile(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -96,5 +100,6 @@ func UploadFile(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Failed to save file from request: " + err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "File " + file.Filename + " Uploaded successfully"})
 }
